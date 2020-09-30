@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageId>Reductech.Templates.DotNetLibrary</PackageId>
+    <PackageId>Reductech.Utilities.Testing</PackageId>
     <Title>.NET Core Library Template</Title>
     <Description>An example of a .NET Core library that uses NUnit for testing, Coverlet for code coverage, and GitLab CI.</Description>
     <Product>Templates</Product>
@@ -19,7 +19,7 @@
     <PackageReleaseNotes>Please see https://gitlab.com/reductech/templates/dotnetlibrary/-/releases</PackageReleaseNotes>
     <PackageTags>template;dotnet;csharp;cicd;gitlab</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    
+
     <Authors>Reductech</Authors>
     <Company>Reductech</Company>
     <Copyright>Copyright (c) 2020 Reductech Ltd</Copyright>

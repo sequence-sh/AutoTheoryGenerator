@@ -6,7 +6,6 @@ using Xunit.Abstractions;
 
 namespace Reductech.Utilities.Testing.Tests
 {
-
     public class MessageWriterTests : MessageWriterTestCases
     {
         public MessageWriterTests(ITestOutputHelper testOutputHelper) => TestOutputHelper = testOutputHelper;
@@ -16,8 +15,6 @@ namespace Reductech.Utilities.Testing.Tests
         [ClassData(typeof(MessageWriterTestCases))]
         public override void Test(string key) => base.Test(key);
     }
-
-
     public class MessageWriterTestCases : TestBase
     {
         private static readonly string DefaultMessage = $"Hello there!{Environment.NewLine}";
@@ -106,6 +103,4 @@ namespace Reductech.Utilities.Testing.Tests
             }
         }
     }
-
-
 }
