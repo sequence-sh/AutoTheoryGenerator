@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <RootNamespace>Reductech.Utilities.Testing</RootNamespace>
+    <AssemblyName>Reductech.Utilities.Testing</AssemblyName>
+    <Version>0.1.0$(VersionSuffix)</Version>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Reductech.Templates.DotNetLibrary</PackageId>
+    <Title>.NET Core Library Template</Title>
+    <Description>An example of a .NET Core library that uses NUnit for testing, Coverlet for code coverage, and GitLab CI.</Description>
+    <Product>Templates</Product>
+
+    <PackageProjectUrl>https://gitlab.com/reductech/templates/dotnetlibrary</PackageProjectUrl>
+    <RepositoryUrl>https://gitlab.com/reductech/templates/dotnetlibrary</RepositoryUrl>
+    <PackageReleaseNotes>Please see https://gitlab.com/reductech/templates/dotnetlibrary/-/releases</PackageReleaseNotes>
+    <PackageTags>template;dotnet;csharp;cicd;gitlab</PackageTags>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    
+    <Authors>Reductech</Authors>
+    <Company>Reductech</Company>
+    <Copyright>Copyright (c) 2020 Reductech Ltd</Copyright>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.11.8" />
+    <PackageReference Include="FluentAssertions" Version="5.10.3" />
+    <PackageReference Include="xunit.abstractions" Version="2.0.3" />
+    <PackageReference Include="xunit.assert" Version="2.4.1" />
+  </ItemGroup>
+
+</Project>
