@@ -2,22 +2,21 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-
     <IsPackable>false</IsPackable>
     <IsPublishable>false</IsPublishable>
     <IsTestProject>true</IsTestProject>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <RepositoryUrl>https://gitlab.com/reductech/templates/dotnetlibrary</RepositoryUrl>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    
-    <Authors>Reductech</Authors>
-    <Company>Reductech</Company>
-    <Copyright>Copyright (c) 2020 Reductech Ltd</Copyright>
     <AssemblyName>Reductech.Utilities.Testing.Tests</AssemblyName>
     <RootNamespace>Reductech.Utilities.Testing.Tests</RootNamespace>
     <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <RepositoryUrl>https://gitlab.com/reductech/utilities/testing</RepositoryUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    
+    <Authors>reductech</Authors>
+    <Company>Reductech</Company>
+    <Copyright>Copyright (c) 2020 Reductech Ltd</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
