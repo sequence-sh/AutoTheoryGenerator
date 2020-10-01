@@ -12,7 +12,7 @@
   <PropertyGroup>
     <PackageId>Reductech.Utilities.Testing</PackageId>
     <Title>Reductech Testing Extensions</Title>
-    <Description></Description>
+    <Description>Contains methods to help with unit testing.</Description>
 
     <PackageProjectUrl>https://gitlab.com/reductech/utilities/testing</PackageProjectUrl>
     <RepositoryUrl>https://gitlab.com/reductech/utilities/testing</RepositoryUrl>
