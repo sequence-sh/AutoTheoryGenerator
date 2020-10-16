@@ -5,25 +5,24 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <RootNamespace>Reductech.Utilities.Testing</RootNamespace>
     <AssemblyName>Reductech.Utilities.Testing</AssemblyName>
+    <Nullable>enable</Nullable>
     <Version>0.1.0$(VersionSuffix)</Version>
   </PropertyGroup>
 
   <PropertyGroup>
     <PackageId>Reductech.Utilities.Testing</PackageId>
-    <Title>.NET Core Library Template</Title>
-    <Description>An example of a .NET Core library that uses NUnit for testing, Coverlet for code coverage, and GitLab CI.</Description>
-    <Product>Templates</Product>
+    <Title>Reductech Testing Extensions</Title>
+    <Description>Contains methods to help with unit testing.</Description>
 
-    <PackageProjectUrl>https://gitlab.com/reductech/templates/dotnetlibrary</PackageProjectUrl>
-    <RepositoryUrl>https://gitlab.com/reductech/templates/dotnetlibrary</RepositoryUrl>
-    <PackageReleaseNotes>Please see https://gitlab.com/reductech/templates/dotnetlibrary/-/releases</PackageReleaseNotes>
-    <PackageTags>template;dotnet;csharp;cicd;gitlab</PackageTags>
+    <PackageProjectUrl>https://gitlab.com/reductech/utilities/testing</PackageProjectUrl>
+    <RepositoryUrl>https://gitlab.com/reductech/utilities/testing</RepositoryUrl>
+    <PackageReleaseNotes>Please see https://gitlab.com/reductech/utilities/testing/-/releases</PackageReleaseNotes>
+    <PackageTags>testing;dotnet;csharp</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 
-    <Authors>Reductech</Authors>
+    <Authors>reductech</Authors>
     <Company>Reductech</Company>
     <Copyright>Copyright (c) 2020 Reductech Ltd</Copyright>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
