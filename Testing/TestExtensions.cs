@@ -77,7 +77,7 @@ namespace Reductech.Utilities.Testing
         /// </summary>
         public static void ShouldBeFailure(this Result result, string? expectedError = null)
         {
-            result.IsFailure.Should().BeTrue();
+            result.IsFailure.Should().BeTrue("The result was expected to fail");
 
             if (expectedError != null)
                 result.Error.Should().Be(expectedError);
@@ -88,7 +88,7 @@ namespace Reductech.Utilities.Testing
         /// </summary>
         public static void ShouldBeFailure<T>(this Result<T> result, string? expectedError = null)
         {
-            result.IsFailure.Should().BeTrue();
+            result.IsFailure.Should().BeTrue("The result was expected to fail");
 
             if (expectedError != null)
                 result.Error.Should().Be(expectedError);
@@ -104,7 +104,7 @@ namespace Reductech.Utilities.Testing
         /// </summary>
         public static void ShouldBeFailure<T, TE>(this Result<T, TE> result, TE expectedError)
         {
-            result.IsFailure.Should().BeTrue();
+            result.IsFailure.Should().BeTrue("The result was expected to fail");
 
             result.Error.Should().Be(expectedError);
         }
