@@ -6,7 +6,7 @@
     <RootNamespace>Reductech.Utilities.Testing</RootNamespace>
     <AssemblyName>Reductech.Utilities.Testing</AssemblyName>
     <Nullable>enable</Nullable>
-    <Version>0.1.1$(VersionSuffix)</Version>
+    <Version>0.2.0$(VersionSuffix)</Version>
   </PropertyGroup>
 
   <PropertyGroup>
