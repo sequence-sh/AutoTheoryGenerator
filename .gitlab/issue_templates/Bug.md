@@ -2,7 +2,7 @@
 /label ~"severity::3" 
 /label ~"priority::3" 
 /label ~"wf::backlog" 
-/label ~"area::core" 
+/label ~"area::testing" 
 ## Summary
 
 Concise description of the bug.

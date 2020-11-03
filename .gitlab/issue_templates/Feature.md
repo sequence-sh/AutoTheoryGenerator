@@ -1,8 +1,6 @@
 /label ~feature
-/label ~"priority::3"
 /label ~"wf::backlog"
-/label ~"area::core"
-/weight 4
+/label ~"area::testing" 
 ## Story
 
 In a couple of sentences, using simple, non-technical language,
