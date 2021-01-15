@@ -7,107 +7,108 @@ using Xunit.Abstractions;
 
 namespace Reductech.Utilities.Testing.Tests
 {
-    public class MessageWriterTestsParallel : MessageWriterTestCasesParallel
+
+public class MessageWriterTestsParallel : MessageWriterTestCasesParallel
+{
+    public MessageWriterTestsParallel(ITestOutputHelper testOutputHelper) =>
+        TestOutputHelper = testOutputHelper;
+
+    /// <inheritdoc />
+    [Theory]
+    [ClassData(typeof(MessageWriterTestCases))]
+    public override async Task Test(string key)
     {
-        public MessageWriterTestsParallel(ITestOutputHelper testOutputHelper) => TestOutputHelper = testOutputHelper;
+        await base.Test(key);
+    }
+}
 
+public class MessageWriterTestCasesParallel : TestBaseParallel
+{
+    private static readonly string DefaultMessage = $"Hello there!{Environment.NewLine}";
 
-        /// <inheritdoc />
-        [Theory]
-        [ClassData(typeof(MessageWriterTestCases))]
-        public override async Task Test(string key)
+    /// <inheritdoc />
+    protected override IEnumerable<ITestBaseCaseParallel> TestCases
+    {
+        get
         {
-            await base.Test(key);
+            yield return new MessageWriterTestCase()
+            {
+                CaseName = "When no args are supplied, writes default message to stream",
+                Args     = Array.Empty<string>(),
+                Expected = DefaultMessage
+            };
+
+            yield return new MessageWriterTestCase()
+            {
+                CaseName =
+                    "When first arg is an empty string, writes default message to stream",
+                Args     = new[] { "", "abc" },
+                Expected = DefaultMessage
+            };
+
+            yield return new MessageWriterTestCase()
+            {
+                CaseName = "When one arg is supplied, writes arg to stream",
+                Args     = new[] { "Hiya!" },
+                Expected = $"Hiya!{Environment.NewLine}"
+            };
+
+            yield return new MessageWriterTestCase()
+            {
+                CaseName =
+                    "When multiple arg are supplied, joins and writes all args to stream",
+                Args     = new[] { "Hi", "there", "yourself" },
+                Expected = $"Hi there yourself{Environment.NewLine}"
+            };
         }
     }
-    public class MessageWriterTestCasesParallel : TestBaseParallel
-    {
-        private static readonly string DefaultMessage = $"Hello there!{Environment.NewLine}";
 
+    private class MessageWriterTestCase : ITestBaseCaseParallel
+    {
+        /// <summary>
+        /// The case name
+        /// </summary>
+        public string CaseName { get; set; } = null!;
+
+        /// <summary>
+        /// The expected message
+        /// </summary>
+        public string Expected { get; set; } = null!;
+
+        /// <summary>
+        /// Message arguments
+        /// </summary>
+        public string[] Args { get; set; } = null!;
 
         /// <inheritdoc />
-        protected override IEnumerable<ITestBaseCaseParallel> TestCases
+        public string Name => CaseName;
+
+        /// <inheritdoc />
+        public async Task ExecuteAsync(ITestOutputHelper testOutputHelper)
         {
-            get
-            {
-                yield return new MessageWriterTestCase()
-                {
-                    CaseName = "When no args are supplied, writes default message to stream",
-                    Args = Array.Empty<string>(),
-                    Expected = DefaultMessage
-                };
+            await Task.CompletedTask;
 
-                yield return new MessageWriterTestCase()
-                {
-                    CaseName = "When first arg is an empty string, writes default message to stream",
-                    Args = new[] { "", "abc" },
-                    Expected = DefaultMessage
-                };
+            var messageStream = new MessageStream();
+            var messageWriter = new MessageWriter(messageStream);
 
-                yield return new MessageWriterTestCase()
-                {
-                    CaseName = "When one arg is supplied, writes arg to stream",
-                    Args = new[] { "Hiya!" },
-                    Expected = $"Hiya!{Environment.NewLine}"
-                };
+            messageWriter.WriteMessage(Args);
+            var actual = messageStream.GetMessage();
 
-                yield return new MessageWriterTestCase()
-                {
-                    CaseName = "When multiple arg are supplied, joins and writes all args to stream",
-                    Args = new[] { "Hi", "there", "yourself" },
-                    Expected = $"Hi there yourself{Environment.NewLine}"
-                };
-            }
+            Assert.Equal(actual, Expected);
         }
 
+        /// <inheritdoc />
+        public override string ToString() => Name;
 
-        private class MessageWriterTestCase : ITestBaseCaseParallel
+        private class MessageStream : IMessageStream
         {
-            /// <summary>
-            /// The case name
-            /// </summary>
-            public string CaseName { get; set; } = null!;
+            private readonly StringWriter _stringWriter = new StringWriter();
 
-            /// <summary>
-            /// The expected message
-            /// </summary>
-            public string Expected { get; set; } = null!;
+            public void WriteLine(string message) => _stringWriter.WriteLine(message);
 
-            /// <summary>
-            /// Message arguments
-            /// </summary>
-            public string[] Args { get; set; } = null!;
-
-
-            /// <inheritdoc />
-            public string Name => CaseName;
-
-            /// <inheritdoc />
-            public async Task ExecuteAsync(ITestOutputHelper testOutputHelper)
-            {
-                await Task.CompletedTask;
-
-                var messageStream = new MessageStream();
-                var messageWriter = new MessageWriter(messageStream);
-
-                messageWriter.WriteMessage(Args);
-                var actual = messageStream.GetMessage();
-
-                Assert.Equal(actual, Expected);
-            }
-
-            /// <inheritdoc />
-            public override string ToString() => Name;
-
-
-            private class MessageStream : IMessageStream
-            {
-                private readonly StringWriter _stringWriter = new StringWriter();
-
-                public void WriteLine(string message) => _stringWriter.WriteLine(message);
-
-                public string GetMessage() => _stringWriter.ToString();
-            }
+            public string GetMessage() => _stringWriter.ToString();
         }
     }
+}
+
 }

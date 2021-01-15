@@ -4,23 +4,26 @@ using static Reductech.Utilities.TheoryGenerator.Constants;
 namespace Reductech.Utilities.TheoryGenerator
 {
 
-    internal static class Constants
-    {
-        public static readonly string GenerateTheoryAttribute = nameof(GenerateTheoryAttribute);
-        public const string UseTestOutputHelperAttribute = nameof(UseTestOutputHelperAttribute);
-        public static readonly  string GenerateAsyncTheoryAttribute = nameof(GenerateAsyncTheoryAttribute);
-        public static readonly  string AutoTheory = nameof(AutoTheory);
-        public const string ITestInstance = nameof(ITestInstance);
-        public static readonly  string IAsyncTestInstance = nameof(IAsyncTestInstance);
-    }
-    internal static class DefaultFiles
-    {
-        public static readonly IEnumerable<(string fileName, string text)> StaticFiles =
-            new List<(string fileName, string text)>()
-            {
-                (UseTestOutputHelperAttribute,
+internal static class Constants
+{
+    public static readonly string GenerateTheoryAttribute = nameof(GenerateTheoryAttribute);
+    public const string UseTestOutputHelperAttribute = nameof(UseTestOutputHelperAttribute);
 
-                    $@"using System;
+    public static readonly string GenerateAsyncTheoryAttribute =
+        nameof(GenerateAsyncTheoryAttribute);
+
+    public static readonly string AutoTheory = nameof(AutoTheory);
+    public const string ITestInstance = nameof(ITestInstance);
+    public static readonly string IAsyncTestInstance = nameof(IAsyncTestInstance);
+}
+
+internal static class DefaultFiles
+{
+    public static readonly IEnumerable<(string fileName, string text)> StaticFiles =
+        new List<(string fileName, string text)>()
+        {
+            (UseTestOutputHelperAttribute,
+             $@"using System;
 
 namespace {AutoTheory}
 {{
@@ -30,11 +33,8 @@ namespace {AutoTheory}
     {{
     }}
 }}"
-                    ),
-
-
-
-                (GenerateTheoryAttribute, $@"using System;
+            ),
+            (GenerateTheoryAttribute, $@"using System;
 
 namespace {AutoTheory}
 {{
@@ -51,7 +51,7 @@ namespace {AutoTheory}
         public string Category {{ get; set; }}
     }}
 }}"),
-                (GenerateAsyncTheoryAttribute, $@"using System;
+            (GenerateAsyncTheoryAttribute, $@"using System;
 
 namespace {AutoTheory}
 {{
@@ -68,8 +68,7 @@ namespace {AutoTheory}
         public string Category {{ get; set; }}
     }}
 }}"),
-
-                ("TestInstance",$@"using System.Threading.Tasks;
+            ("TestInstance", $@"using System.Threading.Tasks;
 using Xunit.Abstractions;
 
 namespace {AutoTheory}
@@ -136,6 +135,7 @@ namespace {AutoTheory}
     }}
 }}
 ")
-            };
-    }
+        };
+}
+
 }

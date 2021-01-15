@@ -10,91 +10,103 @@ using static Reductech.Utilities.TheoryGenerator.Constants;
 
 namespace Reductech.Utilities.TheoryGenerator
 {
-    [Generator]
-    public class Generator : ISourceGenerator
+
+[Generator]
+public class Generator : ISourceGenerator
+{
+    public void Initialize(GeneratorInitializationContext context) { }
+
+    public void Execute(GeneratorExecutionContext context) //TODO use syntax receiver
     {
-        public void Initialize(GeneratorInitializationContext context)
+        //#if DEBUG
+        //            if (!Debugger.IsAttached)
+        //            {
+        //                Debugger.Launch();
+        //            }
+        //#endif
+
+        if (!(context.Compilation is CSharpCompilation csc &&
+              csc.SyntaxTrees[0].Options is CSharpParseOptions options))
+            return;
+
+        var syntaxTrees = new List<SyntaxTree>();
+
+        foreach (var (fileName, text) in DefaultFiles.StaticFiles)
         {
+            var sourceBase = SourceText.From(text, Encoding.UTF8);
+            context.AddSource(fileName, sourceBase);
+            syntaxTrees.Add(CSharpSyntaxTree.ParseText(text, options));
         }
 
+        var compilation = context.Compilation.AddSyntaxTrees(syntaxTrees.ToArray());
 
-        public void Execute(GeneratorExecutionContext context) //TODO use syntax receiver
-        {
-//#if DEBUG
-//            if (!Debugger.IsAttached)
-//            {
-//                Debugger.Launch();
-//            }
-//#endif
+        var allTypes = compilation.Assembly.GlobalNamespace.GetAllTypes().ToList();
 
+        var generateCasesAttributeSymbol =
+            compilation.GetTypeByMetadataName($"{AutoTheory}.{GenerateTheoryAttribute}");
 
-            if (!(context.Compilation is CSharpCompilation csc &&
-                  csc.SyntaxTrees[0].Options is CSharpParseOptions options))
-                return;
+        var generateAsyncCasesAttributeSymbol =
+            compilation.GetTypeByMetadataName($"{AutoTheory}.{GenerateAsyncTheoryAttribute}");
 
+        var testInstanceSymbol = compilation.GetTypeByMetadataName($"{AutoTheory}.{ITestInstance}");
 
-            var syntaxTrees = new List<SyntaxTree>();
-            foreach (var (fileName, text) in DefaultFiles.StaticFiles)
-            {
-                var sourceBase = SourceText.From(text, Encoding.UTF8);
-                context.AddSource(fileName, sourceBase);
-                syntaxTrees.Add(CSharpSyntaxTree.ParseText(text, options));
-            }
+        var asyncTestInstanceSymbol =
+            compilation.GetTypeByMetadataName($"{AutoTheory}.{IAsyncTestInstance}");
 
-            var compilation = context.Compilation.AddSyntaxTrees(syntaxTrees.ToArray());
+        var useTestOutputHelperSymbol =
+            compilation.GetTypeByMetadataName($"{AutoTheory}.{UseTestOutputHelperAttribute}");
 
-
-            var allTypes = compilation.Assembly.GlobalNamespace.GetAllTypes().ToList();
-
-            var generateCasesAttributeSymbol =
-                compilation.GetTypeByMetadataName($"{AutoTheory}.{GenerateTheoryAttribute}");
-            var generateAsyncCasesAttributeSymbol =
-                compilation.GetTypeByMetadataName($"{AutoTheory}.{GenerateAsyncTheoryAttribute}");
-            var testInstanceSymbol = compilation.GetTypeByMetadataName($"{AutoTheory}.{ITestInstance}");
-            var asyncTestInstanceSymbol = compilation.GetTypeByMetadataName($"{AutoTheory}.{IAsyncTestInstance}");
-            var useTestOutputHelperSymbol =
-                compilation.GetTypeByMetadataName($"{AutoTheory}.{UseTestOutputHelperAttribute}");
-
-            var allPropertiesInConcreteClasses = allTypes
-                    .OfType<INamedTypeSymbol>()
-                    .Where(x => !x.IsAbstract)
-                    .SelectMany(concreteType =>
-                        concreteType.DescendantsAndSelf(t => t.BaseType)
-                            .SelectMany(t => t.GetMembers().OfType<IPropertySymbol>().Where(x => !x.IsAbstract))
-                            .Select(property => (concreteType, property)))
-                ;
-
-            var generateTheoryProperties = new List<GenerateTheoryProperty>();
-
-            foreach (var (concreteType, propertySymbol) in allPropertiesInConcreteClasses)
-            {
-                var newProperties = FindGenerateTheoryProperties(context, propertySymbol,
-                    concreteType,
-                    generateCasesAttributeSymbol,
-                    generateAsyncCasesAttributeSymbol, asyncTestInstanceSymbol, testInstanceSymbol);
-                generateTheoryProperties.AddRange(newProperties);
-            }
-
-            var classes = generateTheoryProperties.GroupBy(x => x.TestClass)
-                .Select(x => (Class: x.Key, Properties: x.ToList())).ToList();
-
-
-            var extraClasses = allTypes
+        var allPropertiesInConcreteClasses = allTypes
                 .OfType<INamedTypeSymbol>()
                 .Where(x => !x.IsAbstract)
-                .Where(x => x.SelfOrDescendantHasAttribute(useTestOutputHelperSymbol))
-                .Except(classes.Select(x => x.Class)).ToList();
+                .SelectMany(
+                    concreteType =>
+                        concreteType.DescendantsAndSelf(t => t.BaseType)
+                            .SelectMany(
+                                t => t.GetMembers()
+                                    .OfType<IPropertySymbol>()
+                                    .Where(x => !x.IsAbstract)
+                            )
+                            .Select(property => (concreteType, property))
+                )
+            ;
 
-            classes.AddRange(extraClasses.Select(x => (x, new List<GenerateTheoryProperty>())));
+        var generateTheoryProperties = new List<GenerateTheoryProperty>();
 
+        foreach (var (concreteType, propertySymbol) in allPropertiesInConcreteClasses)
+        {
+            var newProperties = FindGenerateTheoryProperties(
+                context,
+                propertySymbol,
+                concreteType,
+                generateCasesAttributeSymbol,
+                generateAsyncCasesAttributeSymbol,
+                asyncTestInstanceSymbol,
+                testInstanceSymbol
+            );
 
-            foreach (var (testClass, properties) in classes)
-            {
-                var testCases = properties.Select(GetCode).ToList();
-                var testCaseString = string.Join("\r\n\r\n", testCases);
+            generateTheoryProperties.AddRange(newProperties);
+        }
 
+        var classes = generateTheoryProperties.GroupBy(x => x.TestClass)
+            .Select(x => (Class: x.Key, Properties: x.ToList()))
+            .ToList();
 
-                var code = $@"
+        var extraClasses = allTypes
+            .OfType<INamedTypeSymbol>()
+            .Where(x => !x.IsAbstract)
+            .Where(x => x.SelfOrDescendantHasAttribute(useTestOutputHelperSymbol))
+            .Except(classes.Select(x => x.Class))
+            .ToList();
+
+        classes.AddRange(extraClasses.Select(x => (x, new List<GenerateTheoryProperty>())));
+
+        foreach (var (testClass, properties) in classes)
+        {
+            var testCases      = properties.Select(GetCode).ToList();
+            var testCaseString = string.Join("\r\n\r\n", testCases);
+
+            var code = $@"
 //<autogenerated />
 
 namespace {testClass.ContainingNamespace.ToDisplayString()}
@@ -116,38 +128,35 @@ public partial class {testClass.Name}
     }}
 }}";
 
-
-                var testClassSource = SourceText.From(code, Encoding.UTF8);
-                context.AddSource($"{testClass.Name}.cs", testClassSource);
-            }
+            var testClassSource = SourceText.From(code, Encoding.UTF8);
+            context.AddSource($"{testClass.Name}.cs", testClassSource);
         }
+    }
 
+    private static string GetCode(GenerateTheoryProperty property)
+    {
+        var attribute    = property.Attribute;
+        var isAsync      = property.IsAsync;
+        var propertyName = property.Property.Name;
 
-        private static string GetCode(GenerateTheoryProperty property)
-        {
-            var attribute = property.Attribute;
-            var isAsync = property.IsAsync;
-            var propertyName = property.Property.Name;
+        var testName = attribute.ConstructorArguments.First().Value.ToString();
 
+        var category = attribute.NamedArguments
+            .Where(x => x.Key == "Category")
+            .Select(x => x.Value.ToCSharpString())
+            .FirstOrDefault();
 
-            var testName = attribute.ConstructorArguments.First().Value.ToString();
-            var category = attribute.NamedArguments
-                .Where(x => x.Key == "Category")
-                .Select(x => x.Value.ToCSharpString())
-                .FirstOrDefault();
+        var interfaceName = isAsync ? IAsyncTestInstance : ITestInstance;
 
+        var categoryString = category == null ? "" : $"\r\n[Trait(\"Category\", \"{category}\")]";
 
-            var interfaceName = isAsync ? IAsyncTestInstance : ITestInstance;
+        var staticMethodName = testName + "Data";
 
-            var categoryString = category == null ? "" : $"\r\n[Trait(\"Category\", \"{category}\")]";
+        var outputType = isAsync ? "async Task" : "void";
+        var runText    = isAsync ? "await instance.RunAsync" : "instance.Run";
 
-            var staticMethodName = testName + "Data";
-
-            var outputType = isAsync ? "async Task" : "void";
-            var runText = isAsync ? "await instance.RunAsync" : "instance.Run";
-
-            var s =
-                $@"#region {testName}
+        var s =
+            $@"#region {testName}
         [Theory]
         [MemberData(nameof({staticMethodName}))]{categoryString}
         public {outputType} {testName}({interfaceName} instance)
@@ -175,88 +184,129 @@ public partial class {testClass.Name}
 			return data;
         }}
 #endregion {testName}";
-            return s;
-        }
 
+        return s;
+    }
 
+    private static IEnumerable<GenerateTheoryProperty> FindGenerateTheoryProperties(
+        GeneratorExecutionContext context,
+        IPropertySymbol propertySymbol,
+        INamedTypeSymbol containingType,
+        INamedTypeSymbol generateCasesAttributeSymbol,
+        INamedTypeSymbol generateAsyncCasesAttributeSymbol,
+        INamedTypeSymbol asyncTestInstanceSymbol,
+        INamedTypeSymbol testInstanceSymbol)
+    {
+        var descendants = propertySymbol.DescendantsAndSelf(x => x.OverriddenProperty).ToList();
 
-        private static IEnumerable<GenerateTheoryProperty> FindGenerateTheoryProperties(
-            GeneratorExecutionContext context,
-            IPropertySymbol propertySymbol,
-            INamedTypeSymbol containingType,
-            INamedTypeSymbol generateCasesAttributeSymbol, INamedTypeSymbol generateAsyncCasesAttributeSymbol,
-            INamedTypeSymbol asyncTestInstanceSymbol, INamedTypeSymbol testInstanceSymbol)
+        var attributes = descendants.SelectMany(
+            d =>
+                d.GetAttributes()
+                    .Where(
+                        a =>
+                            a.AttributeClass != null &&
+                            (a.AttributeClass.Equals(
+                                 generateCasesAttributeSymbol,
+                                 SymbolEqualityComparer.Default
+                             ) ||
+                             a.AttributeClass.Equals(
+                                 generateAsyncCasesAttributeSymbol,
+                                 SymbolEqualityComparer.Default
+                             ))
+                    )
+        );
+
+        foreach (var attributeData in attributes)
         {
-
-            var descendants = propertySymbol.DescendantsAndSelf(x => x.OverriddenProperty).ToList();
-
-            var attributes = descendants.SelectMany(d =>
-                d.GetAttributes().Where(a =>
-                    a.AttributeClass != null &&
-                    (a.AttributeClass.Equals(generateCasesAttributeSymbol, SymbolEqualityComparer.Default) ||
-                     a.AttributeClass.Equals(generateAsyncCasesAttributeSymbol, SymbolEqualityComparer.Default)))
+            Debug.Assert(
+                attributeData.AttributeClass != null,
+                "attributeData.AttributeClass != null"
             );
 
-            foreach (var attributeData in attributes)
-            {
-                Debug.Assert(attributeData.AttributeClass != null, "attributeData.AttributeClass != null");
-                var isAsync =
-                    attributeData.AttributeClass.Equals(generateAsyncCasesAttributeSymbol,
-                        SymbolEqualityComparer.Default);
+            var isAsync =
+                attributeData.AttributeClass.Equals(
+                    generateAsyncCasesAttributeSymbol,
+                    SymbolEqualityComparer.Default
+                );
 
-                var expectedInstanceSymbol = isAsync ? asyncTestInstanceSymbol : testInstanceSymbol;
-                var allInterfaces =
-                    propertySymbol.Type.DescendantsAndSelf(x => x.AllInterfaces)
-                        .Distinct(SymbolEqualityComparer.Default)
-                        .OfType<INamedTypeSymbol>().ToList();
+            var expectedInstanceSymbol = isAsync ? asyncTestInstanceSymbol : testInstanceSymbol;
 
-                var testInstanceName =
-                    allInterfaces
-                        .Where(i =>
+            var allInterfaces =
+                propertySymbol.Type.DescendantsAndSelf(x => x.AllInterfaces)
+                    .Distinct(SymbolEqualityComparer.Default)
+                    .OfType<INamedTypeSymbol>()
+                    .ToList();
+
+            var testInstanceName =
+                allInterfaces
+                    .Where(
+                        i =>
                             i.IsGenericType &&
                             i.ConstructUnboundGenericType().Name.Equals("IEnumerable") &&
                             i.TypeArguments.Length == 1 &&
-                            i.TypeArguments.Single().DescendantsAndSelf(x => x.AllInterfaces)
+                            i.TypeArguments.Single()
+                                .DescendantsAndSelf(x => x.AllInterfaces)
                                 .Contains(expectedInstanceSymbol, SymbolEqualityComparer.Default)
-                        ).Select(x => x.TypeArguments.Single().Name).FirstOrDefault();
+                    )
+                    .Select(x => x.TypeArguments.Single().Name)
+                    .FirstOrDefault();
 
-                if (testInstanceName == null)
-                {
-                    const string messageCode = "TG001";
-                    var message =
-                        $"Properties implementing {attributeData.AttributeClass.Name} should return IEnumerable<{expectedInstanceSymbol}>";
+            if (testInstanceName == null)
+            {
+                const string messageCode = "TG001";
 
-                    context.ReportDiagnostic(Diagnostic.Create(
-                        new DiagnosticDescriptor(messageCode, message, message, "Testing", DiagnosticSeverity.Error,
-                            true),
+                var message =
+                    $"Properties implementing {attributeData.AttributeClass.Name} should return IEnumerable<{expectedInstanceSymbol}>";
+
+                context.ReportDiagnostic(
+                    Diagnostic.Create(
+                        new DiagnosticDescriptor(
+                            messageCode,
+                            message,
+                            message,
+                            "Testing",
+                            DiagnosticSeverity.Error,
+                            true
+                        ),
                         propertySymbol.Locations.FirstOrDefault()
-                    ));
-                }
-                else
-                {
-                    yield return new GenerateTheoryProperty(propertySymbol, attributeData, isAsync, testInstanceName,
-                        containingType);
-                }
+                    )
+                );
+            }
+            else
+            {
+                yield return new GenerateTheoryProperty(
+                    propertySymbol,
+                    attributeData,
+                    isAsync,
+                    testInstanceName,
+                    containingType
+                );
             }
         }
     }
+}
 
-    internal readonly struct GenerateTheoryProperty
+internal readonly struct GenerateTheoryProperty
+{
+    public GenerateTheoryProperty(
+        IPropertySymbol property,
+        AttributeData attribute,
+        bool isAsync,
+        string testInstanceName,
+        INamedTypeSymbol testClass)
     {
-        public GenerateTheoryProperty(IPropertySymbol property, AttributeData attribute, bool isAsync,
-            string testInstanceName, INamedTypeSymbol testClass)
-        {
-            Property = property;
-            Attribute = attribute;
-            IsAsync = isAsync;
-            TestInstanceName = testInstanceName;
-            TestClass = testClass;
-        }
-
-        public IPropertySymbol Property { get; }
-        public AttributeData Attribute { get; }
-        public bool IsAsync { get; }
-        public string TestInstanceName { get; }
-        public INamedTypeSymbol TestClass { get; }
+        Property         = property;
+        Attribute        = attribute;
+        IsAsync          = isAsync;
+        TestInstanceName = testInstanceName;
+        TestClass        = testClass;
     }
+
+    public IPropertySymbol Property { get; }
+    public AttributeData Attribute { get; }
+    public bool IsAsync { get; }
+    public string TestInstanceName { get; }
+    public INamedTypeSymbol TestClass { get; }
+}
+
 }
