@@ -13,7 +13,7 @@
   <PropertyGroup>
     <RepositoryUrl>https://gitlab.com/reductech/utilities/testing</RepositoryUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    
+
     <Authors>reductech</Authors>
     <Company>Reductech</Company>
     <Copyright>Copyright (c) 2020 Reductech Ltd</Copyright>
@@ -38,6 +38,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Testing\Testing.csproj" />
+    <ProjectReference Include="..\TheoryGenerator\TheoryGenerator.csproj" OutputItemType="Analyzer" />
   </ItemGroup>
 
 </Project>
