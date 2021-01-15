@@ -31,11 +31,17 @@ public class Generator : ISourceGenerator
 
         var syntaxTrees = new List<SyntaxTree>();
 
+        var hasIgnoreAttribute = context.Compilation.Assembly.GetAttributes()
+            .Any(x => x.AttributeClass.Name == DontAddAutoTheoryNamespaceAttribute);
+
         foreach (var (fileName, text) in DefaultFiles.StaticFiles)
         {
             var sourceBase = SourceText.From(text, Encoding.UTF8);
-            context.AddSource(fileName, sourceBase);
+
             syntaxTrees.Add(CSharpSyntaxTree.ParseText(text, options));
+
+            if(!hasIgnoreAttribute)
+                context.AddSource(fileName, sourceBase);
         }
 
         var compilation = context.Compilation.AddSyntaxTrees(syntaxTrees.ToArray());

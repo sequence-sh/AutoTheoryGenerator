@@ -15,6 +15,9 @@ internal static class Constants
     public static readonly string AutoTheory = nameof(AutoTheory);
     public const string ITestInstance = nameof(ITestInstance);
     public static readonly string IAsyncTestInstance = nameof(IAsyncTestInstance);
+
+    public const string DontAddAutoTheoryNamespaceAttribute =
+        nameof(DontAddAutoTheoryNamespaceAttribute);
 }
 
 internal static class DefaultFiles
@@ -22,6 +25,19 @@ internal static class DefaultFiles
     public static readonly IEnumerable<(string fileName, string text)> StaticFiles =
         new List<(string fileName, string text)>()
         {
+            (DontAddAutoTheoryNamespaceAttribute,
+             $@"using System;
+
+namespace {AutoTheory}
+{{
+
+    [AttributeUsage(AttributeTargets.Assembly, Inherited = false, AllowMultiple = false)]
+    public sealed class DontAddAutoTheoryNamespaceAttribute : Attribute
+    {{
+    }}
+}}"),
+
+
             (UseTestOutputHelperAttribute,
              $@"using System;
 
