@@ -48,7 +48,7 @@ namespace Reductech.Utilities.Testing.Tests
         }
 
 
-        private class MessageWriterTestCase2 : AutoTheory.ITestInstance
+        private class MessageWriterTestCase2 : AutoTheory.ITestInstance, IXunitSerializable
         {
             /// <summary>
             /// The case name
@@ -91,6 +91,18 @@ namespace Reductech.Utilities.Testing.Tests
                 public void WriteLine(string message) => _stringWriter.WriteLine(message);
 
                 public string GetMessage() => _stringWriter.ToString();
+            }
+
+            /// <inheritdoc />
+            public void Deserialize(IXunitSerializationInfo info)
+            {
+                throw new NotImplementedException();
+            }
+
+            /// <inheritdoc />
+            public void Serialize(IXunitSerializationInfo info)
+            {
+                info.AddValue(nameof(CaseName), CaseName);
             }
         }
     }

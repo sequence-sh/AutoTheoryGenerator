@@ -8,6 +8,12 @@
     <AssemblyName>Reductech.Utilities.Testing.Tests</AssemblyName>
     <RootNamespace>Reductech.Utilities.Testing.Tests</RootNamespace>
     <Nullable>enable</Nullable>
+
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\GeneratedFiles</CompilerGeneratedFilesOutputPath>
   </PropertyGroup>
 
   <PropertyGroup>

@@ -7,10 +7,10 @@ namespace Reductech.Utilities.TheoryGenerator
     internal static class Constants
     {
         public static readonly string GenerateTheoryAttribute = nameof(GenerateTheoryAttribute);
-        public static readonly string UseTestOutputHelperAttribute = nameof(UseTestOutputHelperAttribute);
+        public const string UseTestOutputHelperAttribute = nameof(UseTestOutputHelperAttribute);
         public static readonly  string GenerateAsyncTheoryAttribute = nameof(GenerateAsyncTheoryAttribute);
         public static readonly  string AutoTheory = nameof(AutoTheory);
-        public static readonly  string ITestInstance = nameof(ITestInstance);
+        public const string ITestInstance = nameof(ITestInstance);
         public static readonly  string IAsyncTestInstance = nameof(IAsyncTestInstance);
     }
     internal static class DefaultFiles
@@ -22,7 +22,7 @@ namespace Reductech.Utilities.TheoryGenerator
 
                     $@"using System;
 
-namespace {Constants.AutoTheory}
+namespace {AutoTheory}
 {{
 
     [AttributeUsage(AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
@@ -36,7 +36,7 @@ namespace {Constants.AutoTheory}
 
                 (GenerateTheoryAttribute, $@"using System;
 
-namespace {Constants.AutoTheory}
+namespace {AutoTheory}
 {{
 
     [AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
@@ -53,7 +53,7 @@ namespace {Constants.AutoTheory}
 }}"),
                 (GenerateAsyncTheoryAttribute, $@"using System;
 
-namespace {Constants.AutoTheory}
+namespace {AutoTheory}
 {{
 
     [AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
@@ -72,14 +72,14 @@ namespace {Constants.AutoTheory}
                 ("TestInstance",$@"using System.Threading.Tasks;
 using Xunit.Abstractions;
 
-namespace {Constants.AutoTheory}
+namespace {AutoTheory}
 {{
-    public interface {ITestInstance}
+    public interface {ITestInstance} : IXunitSerializable
     {{
         public void Run(ITestOutputHelper testOutputHelper);
     }}
 
-    public interface {IAsyncTestInstance}
+    public interface {IAsyncTestInstance} : IXunitSerializable
     {{
         public Task RunAsync(ITestOutputHelper testOutputHelper);
     }}
@@ -96,6 +96,18 @@ namespace {Constants.AutoTheory}
             testOutputHelper.WriteLine(""This test was skipped as there are no cases."");
             await Task.CompletedTask;
         }}
+
+        /// <inheritdoc />
+        public void Deserialize(IXunitSerializationInfo info)
+        {{
+            throw new System.NotImplementedException();
+        }}
+
+        /// <inheritdoc />
+        public void Serialize(IXunitSerializationInfo info)
+        {{
+            info.AddValue(""Name"", ""Skip"");
+        }}
     }}
 
     public class NullTestInstance : {ITestInstance}, {IAsyncTestInstance}
@@ -108,6 +120,18 @@ namespace {Constants.AutoTheory}
         public Task RunAsync(ITestOutputHelper testOutputHelper)
         {{
             throw new Xunit.Sdk.XunitException(""The test case source was null"");
+        }}
+
+        /// <inheritdoc />
+        public void Deserialize(IXunitSerializationInfo info)
+        {{
+            throw new System.NotImplementedException();
+        }}
+
+        /// <inheritdoc />
+        public void Serialize(IXunitSerializationInfo info)
+        {{
+            info.AddValue(""Name"", ""Skip"");
         }}
     }}
 }}
