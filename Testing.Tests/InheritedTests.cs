@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentAssertions;
 using Xunit.Abstractions;
 
 namespace Reductech.Utilities.Testing.Tests
@@ -11,12 +8,12 @@ namespace Reductech.Utilities.Testing.Tests
     public partial class BirdTests : InheritedTests
     {
         /// <inheritdoc />
-        public override IEnumerable<TestInstance> BasicCases
+        public override IEnumerable<string> BasicCases
         {
             get
             {
-                yield return new TestInstance("Parrot");
-                yield return new TestInstance("Robin");
+                yield return "Parrot";
+                yield return "Robin";
             }
         }
     }
@@ -24,12 +21,12 @@ namespace Reductech.Utilities.Testing.Tests
     public partial class ShapeTests : InheritedTests
     {
         /// <inheritdoc />
-        public override IEnumerable<TestInstance> BasicCases
+        public override IEnumerable<string> BasicCases
         {
             get
             {
-                yield return new TestInstance("Square");
-                yield return new TestInstance("Circle");
+                yield return "Square";
+                yield return "Circle";
             }
         }
     }
@@ -37,13 +34,13 @@ namespace Reductech.Utilities.Testing.Tests
     public abstract class InheritedTests
     {
 
-        public abstract IEnumerable<TestInstance> BasicCases { get; }
+        public abstract IEnumerable<string> BasicCases { get; }
 
         [AutoTheory.GenerateTheory("Red")]
-        public IEnumerable<TestInstance> RedCases => BasicCases.Select(x => x with {String = x.String + "Red"});
+        public IEnumerable<TestInstance> RedCases => BasicCases.Select(x =>new TestInstance(x + "Red"));
 
         [AutoTheory.GenerateTheory("Blue")]
-        public IEnumerable<TestInstance> BlueCases => BasicCases.Select(x => x with {String = x.String + "Blue"});
+        public IEnumerable<TestInstance> BlueCases => BasicCases.Select(x =>new TestInstance(x + "Blue"));
 
 
         public record TestInstance(string String) : AutoTheory.ITestInstance//, IXunitSerializable
