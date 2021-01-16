@@ -36,7 +36,7 @@ namespace Reductech.Utilities.Testing.TestsBase
             /// <inheritdoc />
             public void Serialize(IXunitSerializationInfo info)
             {
-                info.AddValue("Name", "Skip");
+                info.AddValue("Name", String);
             }
         }
     }
