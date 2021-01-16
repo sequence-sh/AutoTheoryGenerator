@@ -48,19 +48,19 @@ public class Generator : ISourceGenerator
 
         var allTypes = compilation.Assembly.GlobalNamespace.GetAllTypes().ToList();
 
-        var generateCasesAttributeSymbol =
-            compilation.GetTypeByMetadataName($"{AutoTheory}.{GenerateTheoryAttribute}");
+        //var generateCasesAttributeSymbol =
+        //    compilation.GetTypeByMetadataName($"{AutoTheory}.{GenerateTheoryAttribute}");
 
-        var generateAsyncCasesAttributeSymbol =
-            compilation.GetTypeByMetadataName($"{AutoTheory}.{GenerateAsyncTheoryAttribute}");
+        //var generateAsyncCasesAttributeSymbol =
+        //    compilation.GetTypeByMetadataName($"{AutoTheory}.{GenerateAsyncTheoryAttribute}");
 
-        var testInstanceSymbol = compilation.GetTypeByMetadataName($"{AutoTheory}.{ITestInstance}");
+        //var testInstanceSymbol = compilation.GetTypeByMetadataName($"{AutoTheory}.{ITestInstance}");
 
-        var asyncTestInstanceSymbol =
-            compilation.GetTypeByMetadataName($"{AutoTheory}.{IAsyncTestInstance}");
+        //var asyncTestInstanceSymbol =
+        //    compilation.GetTypeByMetadataName($"{AutoTheory}.{IAsyncTestInstance}");
 
-        var useTestOutputHelperSymbol =
-            compilation.GetTypeByMetadataName($"{AutoTheory}.{UseTestOutputHelperAttribute}");
+        //var useTestOutputHelperSymbol =
+        //    compilation.GetTypeByMetadataName($"{AutoTheory}.{UseTestOutputHelperAttribute}");
 
         var allPropertiesInConcreteClasses = allTypes
                 .OfType<INamedTypeSymbol>()
@@ -84,11 +84,7 @@ public class Generator : ISourceGenerator
             var newProperties = FindGenerateTheoryProperties(
                 context,
                 propertySymbol,
-                concreteType,
-                generateCasesAttributeSymbol,
-                generateAsyncCasesAttributeSymbol,
-                asyncTestInstanceSymbol,
-                testInstanceSymbol
+                concreteType
             );
 
             generateTheoryProperties.AddRange(newProperties);
@@ -101,7 +97,7 @@ public class Generator : ISourceGenerator
         var extraClasses = allTypes
             .OfType<INamedTypeSymbol>()
             .Where(x => !x.IsAbstract)
-            .Where(x => x.SelfOrDescendantHasAttribute(useTestOutputHelperSymbol))
+            .Where(x => x.SelfOrDescendantHasAttributeWithName(UseTestOutputHelperAttribute))
             .Except(classes.Select(x => x.Class))
             .ToList();
 
@@ -197,11 +193,7 @@ public partial class {testClass.Name}
     private static IEnumerable<GenerateTheoryProperty> FindGenerateTheoryProperties(
         GeneratorExecutionContext context,
         IPropertySymbol propertySymbol,
-        INamedTypeSymbol containingType,
-        INamedTypeSymbol generateCasesAttributeSymbol,
-        INamedTypeSymbol generateAsyncCasesAttributeSymbol,
-        INamedTypeSymbol asyncTestInstanceSymbol,
-        INamedTypeSymbol testInstanceSymbol)
+        INamedTypeSymbol containingType)
     {
         var descendants = propertySymbol.DescendantsAndSelf(x => x.OverriddenProperty).ToList();
 
@@ -210,15 +202,7 @@ public partial class {testClass.Name}
                 d.GetAttributes()
                     .Where(
                         a =>
-                            a.AttributeClass != null &&
-                            (a.AttributeClass.Equals(
-                                 generateCasesAttributeSymbol,
-                                 SymbolEqualityComparer.Default
-                             ) ||
-                             a.AttributeClass.Equals(
-                                 generateAsyncCasesAttributeSymbol,
-                                 SymbolEqualityComparer.Default
-                             ))
+                        a.HasName(GenerateTheoryAttribute) || a.HasName(GenerateAsyncTheoryAttribute)
                     )
         );
 
@@ -230,12 +214,9 @@ public partial class {testClass.Name}
             );
 
             var isAsync =
-                attributeData.AttributeClass.Equals(
-                    generateAsyncCasesAttributeSymbol,
-                    SymbolEqualityComparer.Default
-                );
+                attributeData.HasName(GenerateAsyncTheoryAttribute);
 
-            var expectedInstanceSymbol = isAsync ? asyncTestInstanceSymbol : testInstanceSymbol;
+            var expectedInstanceSymbol = isAsync ? IAsyncTestInstance : ITestInstance;
 
             var allInterfaces =
                 propertySymbol.Type.DescendantsAndSelf(x => x.AllInterfaces)
@@ -252,7 +233,7 @@ public partial class {testClass.Name}
                             i.TypeArguments.Length == 1 &&
                             i.TypeArguments.Single()
                                 .DescendantsAndSelf(x => x.AllInterfaces)
-                                .Contains(expectedInstanceSymbol, SymbolEqualityComparer.Default)
+                                .Any(x=>x.Name.Equals(expectedInstanceSymbol))
                     )
                     .Select(x => x.TypeArguments.Single().Name)
                     .FirstOrDefault();

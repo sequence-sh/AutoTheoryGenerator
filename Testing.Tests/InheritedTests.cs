@@ -17,7 +17,7 @@ public partial class BirdTests : ColourTests
     }
 }
 
-public partial class ShapeTests : ColourTests
+public partial  class ShapeTests : ColourTests
 {
     /// <inheritdoc />
     public override IEnumerable<string> BasicCases

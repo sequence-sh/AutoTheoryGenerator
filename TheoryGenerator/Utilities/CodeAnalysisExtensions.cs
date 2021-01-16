@@ -35,6 +35,25 @@ public static class CodeAnalysisExtensions
                     )
             );
     }
+
+    public static bool HasName(this AttributeData attributeData, string name)
+    {
+        return attributeData.AttributeClass != null
+            && attributeData.AttributeClass.Name.Equals(name);
+    }
+
+public static bool SelfOrDescendantHasAttributeWithName(
+        this ITypeSymbol typeSymbol,
+        string name)
+    {
+        return typeSymbol.DescendantsAndSelf(x => x.BaseType)
+            .Any(
+                x => x.GetAttributes()
+                    .Any(
+                        a => a.HasName(name)
+                    )
+            );
+    }
 }
 
 }
