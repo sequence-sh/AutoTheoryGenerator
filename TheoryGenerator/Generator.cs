@@ -48,20 +48,6 @@ public class Generator : ISourceGenerator
 
         var allTypes = compilation.Assembly.GlobalNamespace.GetAllTypes().ToList();
 
-        //var generateCasesAttributeSymbol =
-        //    compilation.GetTypeByMetadataName($"{AutoTheory}.{GenerateTheoryAttribute}");
-
-        //var generateAsyncCasesAttributeSymbol =
-        //    compilation.GetTypeByMetadataName($"{AutoTheory}.{GenerateAsyncTheoryAttribute}");
-
-        //var testInstanceSymbol = compilation.GetTypeByMetadataName($"{AutoTheory}.{ITestInstance}");
-
-        //var asyncTestInstanceSymbol =
-        //    compilation.GetTypeByMetadataName($"{AutoTheory}.{IAsyncTestInstance}");
-
-        //var useTestOutputHelperSymbol =
-        //    compilation.GetTypeByMetadataName($"{AutoTheory}.{UseTestOutputHelperAttribute}");
-
         var allPropertiesInConcreteClasses = allTypes
                 .OfType<INamedTypeSymbol>()
                 .Where(x => !x.IsAbstract)
@@ -90,7 +76,7 @@ public class Generator : ISourceGenerator
             generateTheoryProperties.AddRange(newProperties);
         }
 
-        var classes = generateTheoryProperties.GroupBy(x => x.TestClass)
+        var classes = generateTheoryProperties.Distinct().GroupBy(x => x.TestClass)
             .Select(x => (Class: x.Key, Properties: x.ToList()))
             .ToList();
 
@@ -105,7 +91,7 @@ public class Generator : ISourceGenerator
 
         foreach (var (testClass, properties) in classes)
         {
-            var testCases      = properties.Select(GetCode).ToList();
+            var testCases      = properties.Select(GetCode).Select(x=>x.Trim()).Distinct().ToList();
             var testCaseString = string.Join("\r\n\r\n", testCases);
 
             var code = $@"
@@ -124,7 +110,13 @@ public partial class {testClass.Name}
     {{
         public ITestOutputHelper TestOutputHelper {{ get; }}
 
-        public {testClass.Name}(ITestOutputHelper testOutputHelper) => TestOutputHelper = testOutputHelper;
+        public {testClass.Name}(ITestOutputHelper testOutputHelper)
+        {{
+            TestOutputHelper = testOutputHelper;
+            OnInitialized();
+        }}
+
+        partial void OnInitialized();
 
         {testCaseString}
     }}
