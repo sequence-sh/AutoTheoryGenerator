@@ -8,23 +8,23 @@ namespace Reductech.Utilities.Testing.Tests
 {
 
 [AutoTheory.UseTestOutputHelper]
-public partial class MessageWriterTests2
+public partial class MessageWriterTests
 {
     private static readonly string DefaultMessage = $"Hello there!{Environment.NewLine}";
 
     [AutoTheory.GenerateTheory("Test")]
-    private IEnumerable<MessageWriterTestCase2> TestCases
+    private IEnumerable<MessageWriterTestCase> TestCases
     {
         get
         {
-            yield return new MessageWriterTestCase2()
+            yield return new MessageWriterTestCase()
             {
                 CaseName = "When no args are supplied, writes default message to stream",
                 Args     = Array.Empty<string>(),
                 Expected = DefaultMessage
             };
 
-            yield return new MessageWriterTestCase2()
+            yield return new MessageWriterTestCase()
             {
                 CaseName =
                     "When first arg is an empty string, writes default message to stream",
@@ -32,14 +32,14 @@ public partial class MessageWriterTests2
                 Expected = DefaultMessage
             };
 
-            yield return new MessageWriterTestCase2()
+            yield return new MessageWriterTestCase()
             {
                 CaseName = "When one arg is supplied, writes arg to stream",
                 Args     = new[] { "Hiya!" },
                 Expected = $"Hiya!{Environment.NewLine}"
             };
 
-            yield return new MessageWriterTestCase2()
+            yield return new MessageWriterTestCase()
             {
                 CaseName =
                     "When multiple arg are supplied, joins and writes all args to stream",
@@ -49,7 +49,7 @@ public partial class MessageWriterTests2
         }
     }
 
-    private class MessageWriterTestCase2 : AutoTheory.ITestInstance, IXunitSerializable
+    private class MessageWriterTestCase : AutoTheory.ITestInstance, IXunitSerializable
     {
         /// <summary>
         /// The case name
