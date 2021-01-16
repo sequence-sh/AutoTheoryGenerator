@@ -43,6 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Testing.TestsBase\Testing.TestsBase.csproj" />
     <ProjectReference Include="..\TheoryGenerator\TheoryGenerator.csproj" OutputItemType="Analyzer" />
   </ItemGroup>
 
