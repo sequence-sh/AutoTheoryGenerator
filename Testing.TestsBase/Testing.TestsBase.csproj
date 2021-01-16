@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <IsPackable>false</IsPackable>
     <IsPublishable>false</IsPublishable>
+    <IsTestProject>false</IsTestProject>
     <AssemblyName>Reductech.Utilities.Testing.TestsBase</AssemblyName>
     <RootNamespace>Reductech.Utilities.Testing.TestsBase</RootNamespace>
     <Nullable>enable</Nullable>
