@@ -143,7 +143,7 @@ public partial class {testClass.Name}
 
         var interfaceName = isAsync ? IAsyncTestInstance : ITestInstance;
 
-        var categoryString = category == null ? "" : $"\r\n[Trait(\"Category\", \"{category}\")]";
+        var categoryString = category == null ? "" : $"\r\n[Trait(\"Category\", {category})]";
 
         var staticMethodName = testName + "Data";
 

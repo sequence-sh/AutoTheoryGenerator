@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit.Abstractions;
@@ -22,7 +21,7 @@ namespace Reductech.Utilities.Testing.TestsBase
 
 
 
-        [AutoTheory.GenerateAsyncTheory("AsyncTests")]
+        [AutoTheory.GenerateAsyncTheory("AsyncTests", Category = "Async")]
         public IEnumerable<AsyncTestInstance> AsyncCases {
             get
             {
