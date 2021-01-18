@@ -19,24 +19,24 @@ namespace Reductech.Utilities.Testing.TestsBase
         public IEnumerable<TestInstance> BlueCases =>
             BasicCases.Select(x => new TestInstance(x + "Blue"));
 
-        public record TestInstance(string String) : AutoTheory.ITestInstance //, IXunitSerializable
+        public class TestInstance : AutoTheory.ITestInstance
         {
+            public TestInstance(string s) {
+                String = s;
+            }
+
             /// <inheritdoc />
             public void Run(ITestOutputHelper testOutputHelper)
             {
                 testOutputHelper.WriteLine(String);
             }
 
-            /// <inheritdoc />
-            public void Deserialize(IXunitSerializationInfo info)
-            {
-                throw new NotImplementedException();
-            }
+            public string Name => String;
 
-            /// <inheritdoc />
-            public void Serialize(IXunitSerializationInfo info)
+            public string String
             {
-                info.AddValue("Name", String);
+                get;
+                set;
             }
         }
     }

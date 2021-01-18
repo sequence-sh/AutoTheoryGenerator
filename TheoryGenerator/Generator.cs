@@ -102,6 +102,7 @@ namespace {testClass.ContainingNamespace.ToDisplayString()}
 using Xunit;
 using Xunit.Abstractions;
 using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using {AutoTheory};
 
@@ -153,29 +154,43 @@ public partial class {testClass.Name}
             $@"#region {testName}
         [Theory]
         [MemberData(nameof({staticMethodName}))]{categoryString}
-        public {outputType} {testName}({interfaceName} instance)
+        public {outputType} {testName}(string caseName)
         {{
+            var instance = Get{testName}Instance(caseName);
+
             {runText}(TestOutputHelper);
         }}
 
-        public static TheoryData<{interfaceName}> {staticMethodName}()
+        private ITestInstance Get{testName}Instance(string name)
+        {{
+            if(name == ""AutoTheory.Null"") return new AutoTheory.NullTestInstance();
+            if(name == ""AutoTheory.Skip"") return new AutoTheory.SkipTestInstance();
+
+            return {propertyName}.Single(x=>x.Name == name);
+        }}
+
+        public static IEnumerable<object[]> {staticMethodName}()
         {{
             var data = new TheoryData<{interfaceName}>();
 			var instance = new {property.TestClass}(null);
 			var cases = instance.{propertyName};
 			if(cases == null)
 			{{
-                data.Add(new NullTestInstance());
+                yield return new object[]{{""AutoTheory.Null""}};
 			}}
 			else
 			{{
+                var any = false;
 				foreach (var test in cases)
-					data.Add(test);
+                {{
+                    yield return new object[]{{test.Name}};
+                    any = true;
+                }}
 
-				if (!data.Any())
-					data.Add(new SkipTestInstance());
+
+				if (!any)
+					yield return new object[]{{""AutoTheory.Skip""}};
             }}
-			return data;
         }}
 #endregion {testName}";
 

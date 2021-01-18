@@ -6,7 +6,7 @@ namespace Reductech.Utilities.Testing.Tests
 
 public partial class BirdTests : ColourTests
 {
-
+    partial void OnInitialized() { }
 
     /// <inheritdoc />
     public override IEnumerable<string> BasicCases
