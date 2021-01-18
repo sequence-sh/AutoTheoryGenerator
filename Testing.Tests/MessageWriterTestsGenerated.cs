@@ -83,6 +83,22 @@ public partial class MessageWriterTests
         /// <inheritdoc />
         public override string ToString() => Name;
 
+        /// <inheritdoc />
+        public void Deserialize(IXunitSerializationInfo info)
+        {
+            CaseName = info.GetValue<string>(nameof(CaseName));
+            Expected = info.GetValue<string>(nameof(Expected));
+            Args = info.GetValue<string[]>(nameof(Args));
+        }
+
+        /// <inheritdoc />
+        public void Serialize(IXunitSerializationInfo info)
+        {
+            info.AddValue(nameof(CaseName), CaseName);
+            info.AddValue(nameof(Expected), Expected);
+            info.AddValue(nameof(Args), Args);
+        }
+
         private class MessageStream : IMessageStream
         {
             private readonly StringWriter _stringWriter = new StringWriter();
@@ -90,18 +106,6 @@ public partial class MessageWriterTests
             public void WriteLine(string message) => _stringWriter.WriteLine(message);
 
             public string GetMessage() => _stringWriter.ToString();
-        }
-
-        /// <inheritdoc />
-        public void Deserialize(IXunitSerializationInfo info)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc />
-        public void Serialize(IXunitSerializationInfo info)
-        {
-            info.AddValue(nameof(CaseName), CaseName);
         }
     }
 }

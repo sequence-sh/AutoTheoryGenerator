@@ -85,18 +85,21 @@ namespace {AutoTheory}
     }}
 }}"),
             ("TestInstance", $@"using System.Threading.Tasks;
+using System.Collections.Generic;
 using Xunit.Abstractions;
 
 namespace {AutoTheory}
 {{
-    public interface {ITestInstance} : IXunitSerializable
+    public interface {ITestInstance}
     {{
-        public void Run(ITestOutputHelper testOutputHelper);
+        void Run(ITestOutputHelper testOutputHelper);
+
+        string Name {{ get; }}
     }}
 
-    public interface {IAsyncTestInstance} : IXunitSerializable
+    public interface {IAsyncTestInstance}
     {{
-        public Task RunAsync(ITestOutputHelper testOutputHelper);
+        Task RunAsync(ITestOutputHelper testOutputHelper);
     }}
 
     public class SkipTestInstance : {ITestInstance}, {IAsyncTestInstance}
@@ -112,17 +115,7 @@ namespace {AutoTheory}
             await Task.CompletedTask;
         }}
 
-        /// <inheritdoc />
-        public void Deserialize(IXunitSerializationInfo info)
-        {{
-            throw new System.NotImplementedException();
-        }}
-
-        /// <inheritdoc />
-        public void Serialize(IXunitSerializationInfo info)
-        {{
-            info.AddValue(""Name"", ""Skip"");
-        }}
+        public string Name => ""AutoTheory.Skip"";
     }}
 
     public class NullTestInstance : {ITestInstance}, {IAsyncTestInstance}
@@ -137,17 +130,7 @@ namespace {AutoTheory}
             throw new Xunit.Sdk.XunitException(""The test case source was null"");
         }}
 
-        /// <inheritdoc />
-        public void Deserialize(IXunitSerializationInfo info)
-        {{
-            throw new System.NotImplementedException();
-        }}
-
-        /// <inheritdoc />
-        public void Serialize(IXunitSerializationInfo info)
-        {{
-            info.AddValue(""Name"", ""Skip"");
-        }}
+        public string Name => ""AutoTheory.Null"";
     }}
 }}
 ")
