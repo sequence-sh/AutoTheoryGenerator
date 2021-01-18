@@ -161,7 +161,7 @@ public partial class {testClass.Name}
             {runText}(TestOutputHelper);
         }}
 
-        private ITestInstance Get{testName}Instance(string name)
+        private {interfaceName} Get{testName}Instance(string name)
         {{
             if(name == ""AutoTheory.Null"") return new AutoTheory.NullTestInstance();
             if(name == ""AutoTheory.Skip"") return new AutoTheory.SkipTestInstance();
