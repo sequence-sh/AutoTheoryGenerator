@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Reductech.Utilities.Testing.TestsBase;
+using Reductech.Utilities.AutoTheoryGenerator.TestsBase;
 
-namespace Reductech.Utilities.Testing.Tests
+namespace Reductech.Utilities.AutoTheoryGenerator.Tests
 {
 
 public partial class BirdTests : ColourTests

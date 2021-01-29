@@ -3,16 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testing.Tests", "Testing.Tests\Testing.Tests.csproj", "{1A60ACDC-C940-48D7-901A-3965084786C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTheoryGenerator.Tests", "AutoTheoryGenerator.Tests\AutoTheoryGenerator.Tests.csproj", "{1A60ACDC-C940-48D7-901A-3965084786C3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheoryGenerator", "TheoryGenerator\TheoryGenerator.csproj", "{D52C345F-7F06-4454-B86D-D1D7343FBD00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTheoryGenerator", "AutoTheoryGenerator\AutoTheoryGenerator.csproj", "{D52C345F-7F06-4454-B86D-D1D7343FBD00}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C9197442-4611-4583-8B5F-F83EB70DBE9F}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing.TestsBase", "Testing.TestsBase\Testing.TestsBase.csproj", "{CAF44E68-44CA-4A9B-9E22-109AF0F1D8E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTheoryGenerator.TestsBase", "AutoTheoryGenerator.TestsBase\AutoTheoryGenerator.TestsBase.csproj", "{CAF44E68-44CA-4A9B-9E22-109AF0F1D8E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

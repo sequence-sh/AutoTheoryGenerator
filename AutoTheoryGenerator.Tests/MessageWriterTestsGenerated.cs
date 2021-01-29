@@ -4,7 +4,7 @@ using System.IO;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Reductech.Utilities.Testing.Tests
+namespace Reductech.Utilities.AutoTheoryGenerator.Tests
 {
 
 [AutoTheory.UseTestOutputHelper]

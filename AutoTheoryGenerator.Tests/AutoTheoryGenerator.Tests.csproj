@@ -5,10 +5,9 @@
     <IsPackable>false</IsPackable>
     <IsPublishable>false</IsPublishable>
     <IsTestProject>true</IsTestProject>
-    <AssemblyName>Reductech.Utilities.Testing.Tests</AssemblyName>
-    <RootNamespace>Reductech.Utilities.Testing.Tests</RootNamespace>
+    <AssemblyName>Reductech.Utilities.AutoTheoryGenerator.Tests</AssemblyName>
+    <RootNamespace>Reductech.Utilities.AutoTheoryGenerator.Tests</RootNamespace>
     <Nullable>enable</Nullable>
-
   </PropertyGroup>
 
   <PropertyGroup>
@@ -17,12 +16,12 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <RepositoryUrl>https://gitlab.com/reductech/utilities/testing</RepositoryUrl>
+    <RepositoryUrl>https://gitlab.com/reductech/utilities/autotheorygenerator</RepositoryUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 
-    <Authors>reductech</Authors>
+    <Authors>Reductech</Authors>
     <Company>Reductech</Company>
-    <Copyright>Copyright (c) 2020 Reductech Ltd</Copyright>
+    <Copyright>Copyright (c) 2021 Reductech Ltd</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
@@ -43,8 +42,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Testing.TestsBase\Testing.TestsBase.csproj" />
-    <ProjectReference Include="..\TheoryGenerator\TheoryGenerator.csproj" OutputItemType="Analyzer" />
+    <ProjectReference Include="..\AutoTheoryGenerator.TestsBase\AutoTheoryGenerator.TestsBase.csproj" />
+    <ProjectReference Include="..\AutoTheoryGenerator\AutoTheoryGenerator.csproj" OutputItemType="Analyzer" />
   </ItemGroup>
 
 </Project>
