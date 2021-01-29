@@ -5,14 +5,22 @@
     <IsPackable>false</IsPackable>
     <IsPublishable>false</IsPublishable>
     <IsTestProject>false</IsTestProject>
-    <AssemblyName>Reductech.Utilities.Testing.TestsBase</AssemblyName>
-    <RootNamespace>Reductech.Utilities.Testing.TestsBase</RootNamespace>
+    <AssemblyName>Reductech.Utilities.AutoTheoryGenerator.TestsBase</AssemblyName>
+    <RootNamespace>Reductech.Utilities.AutoTheoryGenerator.TestsBase</RootNamespace>
     <Nullable>enable</Nullable>
+  </PropertyGroup>
 
+  <PropertyGroup>
+    <RepositoryUrl>https://gitlab.com/reductech/utilities/autotheorygenerator</RepositoryUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+
+    <Authors>Reductech</Authors>
+    <Company>Reductech</Company>
+    <Copyright>Copyright (c) 2021 Reductech Ltd</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="coverlet.collector" Version="3.0.0">
+    <PackageReference Include="coverlet.collector" Version="3.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -25,7 +33,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TheoryGenerator\TheoryGenerator.csproj" OutputItemType="Analyzer" />
+    <ProjectReference Include="..\AutoTheoryGenerator\AutoTheoryGenerator.csproj" OutputItemType="Analyzer" />
   </ItemGroup>
 
 </Project>

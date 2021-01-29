@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 
-namespace Reductech.Utilities.TheoryGenerator.Utilities
+namespace Reductech.Utilities.AutoTheoryGenerator.Utilities
 {
 
 public static class CodeAnalysisExtensions

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using static Reductech.Utilities.TheoryGenerator.Constants;
+using static Reductech.Utilities.AutoTheoryGenerator.Constants;
 
-namespace Reductech.Utilities.TheoryGenerator
+namespace Reductech.Utilities.AutoTheoryGenerator
 {
 
 internal static class Constants

@@ -1,4 +1,4 @@
-﻿namespace Reductech.Utilities.Testing.Tests
+﻿namespace Reductech.Utilities.AutoTheoryGenerator.Tests
 {
 
 public interface IMessageStream
