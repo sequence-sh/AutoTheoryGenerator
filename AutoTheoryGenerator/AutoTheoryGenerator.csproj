@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -6,7 +6,7 @@
     <AssemblyName>Reductech.Utilities.AutoTheoryGenerator</AssemblyName>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild> <!-- Generates a package at build -->
     <IncludeBuildOutput>false</IncludeBuildOutput> <!-- Do not include the generator as a lib dependency -->
-    <Version>0.4.0$(VersionSuffix)</Version>
+    <Version>0.5.0$(VersionSuffix)</Version>
   </PropertyGroup>
 
   <PropertyGroup>
