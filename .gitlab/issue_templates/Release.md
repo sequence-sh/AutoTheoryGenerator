@@ -14,9 +14,9 @@
     - `dotnet list .\AutoTheoryGenerator.Tests\AutoTheoryGenerator.Tests.csproj package --outdated`
     - `dotnet list .\AutoTheoryGenerator.TestsBase\AutoTheoryGenerator.TestsBase.csproj package --outdated`
   - To update
-    - `dotnet add .\AutoTheoryGenerator\AutoTheoryGenerator.csproj package`
-    - `dotnet add .\AutoTheoryGenerator.Tests\AutoTheoryGenerator.Tests.csproj package`
-    - `dotnet add .\AutoTheoryGenerator.TestsBase\AutoTheoryGenerator.TestsBase.csproj package`
+    - `dotnet add .\AutoTheoryGenerator\AutoTheoryGenerator.csproj package <name>`
+    - `dotnet add .\AutoTheoryGenerator.Tests\AutoTheoryGenerator.Tests.csproj package <name>`
+    - `dotnet add .\AutoTheoryGenerator.TestsBase\AutoTheoryGenerator.TestsBase.csproj package <name>`
 - [ ] Update the changelog
   - Manually, or use: reductech/pwsh/New-Changelog>
   - To include all issues from the last release tag to _HEAD_:
