@@ -1,10 +1,10 @@
-# Reductech Testing Extensions
+# Reductech Theory Generator
 
-[![pipeline status](https://gitlab.com/reductech/utilities/testing/badges/master/pipeline.svg)](https://gitlab.com/reductech/utilities/testing/-/commits/master)
-[![coverage report](https://gitlab.com/reductech/utilities/testing/badges/master/coverage.svg)](https://gitlab.com/reductech/utilities/testing/-/commits/master)
+[![pipeline status](https://gitlab.com/reductech/utilities/autotheorygenerator/badges/master/pipeline.svg)](https://gitlab.com/reductech/utilities/autotheorygenerator/-/commits/master)
+[![coverage report](https://gitlab.com/reductech/utilities/autotheorygenerator/badges/master/coverage.svg)](https://gitlab.com/reductech/utilities/autotheorygenerator/-/commits/master)
 
-Contains methods to help with unit testing.
+A library to automatically generate xUnit theory methods from lists of test cases.
 
 # Releases
 
-Can be downloaded [here](https://gitlab.com/reductech/utilities/testing/-/releases).
+Can be downloaded [here](https://gitlab.com/reductech/utilities/autotheorygenerator/-/releases).
