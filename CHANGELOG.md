@@ -1,3 +1,7 @@
+# v0.5.0 (2021-07-02)
+
+- Dependency updates only
+
 ## v0.4.0 (2021-01-29)
 
 Major rewrite of the library to use the new source generator features
