@@ -1,4 +1,4 @@
-# v (2021-09-03)
+# v0.6.0 (2021-09-03)
 
 Dependency updates only
 
