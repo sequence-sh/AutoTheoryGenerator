@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using Reductech.Utilities.AutoTheoryGenerator.TestsBase;
 
-namespace Reductech.Utilities.AutoTheoryGenerator.Tests
-{
+namespace Reductech.Utilities.AutoTheoryGenerator.Tests;
 
 public partial  class ShapeTests : ColourTests
 {
@@ -15,6 +14,4 @@ public partial  class ShapeTests : ColourTests
             yield return "Circle";
         }
     }
-}
-
 }
