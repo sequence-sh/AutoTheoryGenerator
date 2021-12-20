@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using Reductech.Utilities.AutoTheoryGenerator.TestsBase;
 
-namespace Reductech.Utilities.AutoTheoryGenerator.Tests
-{
+namespace Reductech.Utilities.AutoTheoryGenerator.Tests;
 
 public partial class BirdTests : ColourTests
 {
@@ -17,6 +16,4 @@ public partial class BirdTests : ColourTests
             yield return "Robin";
         }
     }
-}
-
 }

@@ -4,8 +4,7 @@ using System.IO;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Reductech.Utilities.AutoTheoryGenerator.Tests
-{
+namespace Reductech.Utilities.AutoTheoryGenerator.Tests;
 
 [AutoTheory.UseTestOutputHelper]
 public partial class MessageWriterTests
@@ -88,7 +87,7 @@ public partial class MessageWriterTests
         {
             CaseName = info.GetValue<string>(nameof(CaseName));
             Expected = info.GetValue<string>(nameof(Expected));
-            Args = info.GetValue<string[]>(nameof(Args));
+            Args     = info.GetValue<string[]>(nameof(Args));
         }
 
         /// <inheritdoc />
@@ -96,7 +95,7 @@ public partial class MessageWriterTests
         {
             info.AddValue(nameof(CaseName), CaseName);
             info.AddValue(nameof(Expected), Expected);
-            info.AddValue(nameof(Args), Args);
+            info.AddValue(nameof(Args),     Args);
         }
 
         private class MessageStream : IMessageStream
@@ -108,6 +107,4 @@ public partial class MessageWriterTests
             public string GetMessage() => _stringWriter.ToString();
         }
     }
-}
-
 }

@@ -1,5 +1,4 @@
-﻿namespace Reductech.Utilities.AutoTheoryGenerator.Tests
-{
+﻿namespace Reductech.Utilities.AutoTheoryGenerator.Tests;
 
 public interface IMessageStream
 {
@@ -19,6 +18,4 @@ public class MessageWriter
         else
             _messageStream.WriteLine("Hello there!");
     }
-}
-
 }

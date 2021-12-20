@@ -3,61 +3,58 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit.Abstractions;
 
-namespace Reductech.Utilities.AutoTheoryGenerator.TestsBase
+namespace Reductech.Utilities.AutoTheoryGenerator.TestsBase;
+
+public abstract class ColourTests
 {
+    public abstract IEnumerable<string> BasicCases { get; }
 
+    [AutoTheory.GenerateTheory("Red")]
+    public IEnumerable<TestInstance> RedCases =>
+        BasicCases.Select(x => new TestInstance(x + "Red"));
 
-    public abstract class ColourTests
-    {
-        public abstract IEnumerable<string> BasicCases { get; }
-
-        [AutoTheory.GenerateTheory("Red")]
-        public IEnumerable<TestInstance> RedCases =>
-            BasicCases.Select(x => new TestInstance(x + "Red"));
-
-        [AutoTheory.GenerateTheory("Blue")]
-        public IEnumerable<TestInstance> BlueCases =>
-            BasicCases.Select(x => new TestInstance(x + "Blue"));
+    [AutoTheory.GenerateTheory("Blue")]
+    public IEnumerable<TestInstance> BlueCases =>
+        BasicCases.Select(x => new TestInstance(x + "Blue"));
 
 
 
-        [AutoTheory.GenerateAsyncTheory("AsyncTests", Category = "Async")]
-        public IEnumerable<AsyncTestInstance> AsyncCases {
-            get
-            {
-                yield return new AsyncTestInstance("Test 1");
-                yield return new AsyncTestInstance("Test 2");
-            } }
-
-        public record AsyncTestInstance(string Name) : AutoTheory.IAsyncTestInstance
+    [AutoTheory.GenerateAsyncTheory("AsyncTests", Category = "Async")]
+    public IEnumerable<AsyncTestInstance> AsyncCases {
+        get
         {
-            /// <inheritdoc />
-            public async Task RunAsync(ITestOutputHelper testOutputHelper)
-            {
-                await Task.CompletedTask;
-                testOutputHelper.WriteLine(Name);
-            }
+            yield return new AsyncTestInstance("Test 1");
+            yield return new AsyncTestInstance("Test 2");
+        } }
+
+    public record AsyncTestInstance(string Name) : AutoTheory.IAsyncTestInstance
+    {
+        /// <inheritdoc />
+        public async Task RunAsync(ITestOutputHelper testOutputHelper)
+        {
+            await Task.CompletedTask;
+            testOutputHelper.WriteLine(Name);
+        }
+    }
+
+    public class TestInstance : AutoTheory.ITestInstance
+    {
+        public TestInstance(string s) {
+            String = s;
         }
 
-        public class TestInstance : AutoTheory.ITestInstance
+        /// <inheritdoc />
+        public void Run(ITestOutputHelper testOutputHelper)
         {
-            public TestInstance(string s) {
-                String = s;
-            }
+            testOutputHelper.WriteLine(String);
+        }
 
-            /// <inheritdoc />
-            public void Run(ITestOutputHelper testOutputHelper)
-            {
-                testOutputHelper.WriteLine(String);
-            }
+        public string Name => String;
 
-            public string Name => String;
-
-            public string String
-            {
-                get;
-                set;
-            }
+        public string String
+        {
+            get;
+            set;
         }
     }
 }
