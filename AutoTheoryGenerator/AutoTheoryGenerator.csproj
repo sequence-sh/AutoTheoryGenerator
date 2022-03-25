@@ -16,13 +16,13 @@
 
     <PackageProjectUrl>https://gitlab.com/reductech/utilities/autotheorygenerator</PackageProjectUrl>
     <RepositoryUrl>https://gitlab.com/reductech/utilities/autotheorygenerator</RepositoryUrl>
-    <PackageReleaseNotes>CHANGELOG.md</PackageReleaseNotes>
+    <PackageReleaseNotes>https://gitlab.com/reductech/utilities/autotheorygenerator/-/blob/main/CHANGELOG.md</PackageReleaseNotes>
     <PackageTags>testing;dotnet;csharp;sourcegenerator</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 
     <Authors>Reductech</Authors>
     <Company>Reductech</Company>
-    <Copyright>Copyright (c) 2021 Reductech Ltd</Copyright>
+    <Copyright>Copyright (c) 2022 Reductech Ltd</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
