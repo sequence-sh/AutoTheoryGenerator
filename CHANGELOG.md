@@ -1,3 +1,7 @@
+# v0.9.0 (2022-05-27)
+
+Maintenance release - dependency updates only.
+
 # v0.8.0 (2022-03-25)
 
 Maintenance release - dependency updates only.
@@ -43,5 +47,6 @@ starting with v0.4.0.
 ### Maintenance
 
 - Update ci script to latest template #1
+
 
 
