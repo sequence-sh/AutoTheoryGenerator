@@ -64,7 +64,7 @@ namespace {AutoTheory}
         }}
 
         public string TestName {{ get; set; }}
-        public string Category {{ get; set; }}
+        public string? Category {{ get; set; }}
     }}
 }}"),
             (GenerateAsyncTheoryAttribute, $@"using System;
@@ -81,7 +81,7 @@ namespace {AutoTheory}
         }}
 
         public string TestName {{ get; set; }}
-        public string Category {{ get; set; }}
+        public string? Category {{ get; set; }}
     }}
 }}"),
             ("TestInstance", $@"using System.Threading.Tasks;

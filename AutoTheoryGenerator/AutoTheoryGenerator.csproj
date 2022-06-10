@@ -6,7 +6,7 @@
     <AssemblyName>Reductech.Utilities.AutoTheoryGenerator</AssemblyName>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild> <!-- Generates a package at build -->
     <IncludeBuildOutput>false</IncludeBuildOutput> <!-- Do not include the generator as a lib dependency -->
-    <Version>0.9.0$(VersionSuffix)</Version>
+    <Version>0.10.0$(VersionSuffix)</Version>
   </PropertyGroup>
 
   <PropertyGroup>
