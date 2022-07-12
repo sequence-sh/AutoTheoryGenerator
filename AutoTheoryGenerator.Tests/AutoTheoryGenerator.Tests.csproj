@@ -11,17 +11,17 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-    <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\GeneratedFiles</CompilerGeneratedFilesOutputPath>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <RepositoryUrl>https://gitlab.com/reductech/utilities/autotheorygenerator</RepositoryUrl>
+    <RepositoryUrl>https://gitlab.com/reductech/utilities/autotheorygenerator.git</RepositoryUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 
     <Authors>Reductech</Authors>
     <Company>Reductech</Company>
     <Copyright>Copyright (c) 2022 Reductech Ltd</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\GeneratedFiles</CompilerGeneratedFilesOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
