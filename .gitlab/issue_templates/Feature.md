@@ -1,6 +1,7 @@
 /label ~feature
 /label ~"wf::backlog"
-/label ~"area::testing" 
+/label ~"area::testing"
+
 ## Story
 
 In a couple of sentences, using simple, non-technical language,
@@ -10,7 +11,7 @@ and without providing implementation specifics, describe the following:
 - What is being built
 - What value is created for the user
 
------
+---
 
 > Everything below here is **optional**.
 > It can be added later, once the feature is in planning or design.
@@ -33,7 +34,7 @@ Default is:
 - Has the required code coverage
 - Is merged into master
 
------
+---
 
 > **Everything below here can and should be deleted.**
 
