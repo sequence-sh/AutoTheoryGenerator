@@ -1,3 +1,14 @@
+# v0.10.0 (2022-07-13)
+
+- Enabled [Source Link](https://docs.microsoft.com/en-us/dotnet/standard/library-guidance/sourcelink)
+- Enabled publish to [Nuget.org](https://www.nuget.org) including symbols
+
+## Issues Closed in this Release
+
+### Bug Fixes
+
+- Prevent annoying warnings #34
+
 # v0.9.0 (2022-05-27)
 
 Maintenance release - dependency updates only.
@@ -47,6 +58,3 @@ starting with v0.4.0.
 ### Maintenance
 
 - Update ci script to latest template #1
-
-
-

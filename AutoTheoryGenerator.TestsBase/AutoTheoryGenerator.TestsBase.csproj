@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <RepositoryUrl>https://gitlab.com/reductech/utilities/autotheorygenerator</RepositoryUrl>
+    <RepositoryUrl>https://gitlab.com/reductech/utilities/autotheorygenerator.git</RepositoryUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 
     <Authors>Reductech</Authors>
