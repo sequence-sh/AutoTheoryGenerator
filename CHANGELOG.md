@@ -1,3 +1,7 @@
+# v0.11.0 (2022-08-29)
+
+Maintenance release - dependency updates only.
+
 # v0.10.0 (2022-07-13)
 
 - Enabled [Source Link](https://docs.microsoft.com/en-us/dotnet/standard/library-guidance/sourcelink)
@@ -58,3 +62,4 @@ starting with v0.4.0.
 ### Maintenance
 
 - Update ci script to latest template #1
+
