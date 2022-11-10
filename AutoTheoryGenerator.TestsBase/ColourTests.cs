@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit.Abstractions;
 
-namespace Reductech.Utilities.AutoTheoryGenerator.TestsBase;
+namespace Sequence.Utilities.AutoTheoryGenerator.TestsBase;
 
 public abstract class ColourTests
 {

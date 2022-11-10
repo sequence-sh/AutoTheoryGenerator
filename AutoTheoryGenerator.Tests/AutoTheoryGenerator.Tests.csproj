@@ -5,16 +5,16 @@
     <IsPackable>false</IsPackable>
     <IsPublishable>false</IsPublishable>
     <IsTestProject>true</IsTestProject>
-    <AssemblyName>Reductech.Utilities.AutoTheoryGenerator.Tests</AssemblyName>
-    <RootNamespace>Reductech.Utilities.AutoTheoryGenerator.Tests</RootNamespace>
+    <AssemblyName>Sequence.Utilities.AutoTheoryGenerator.Tests</AssemblyName>
+    <RootNamespace>Sequence.Utilities.AutoTheoryGenerator.Tests</RootNamespace>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <PropertyGroup>
-    <RepositoryUrl>https://gitlab.com/reductech/utilities/autotheorygenerator.git</RepositoryUrl>
+    <RepositoryUrl>https://gitlab.com/sequence/utilities/autotheorygenerator.git</RepositoryUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 
-    <Authors>Reductech</Authors>
+    <Authors>MarkWainwright</Authors>
     <Company>Reductech</Company>
     <Copyright>Copyright (c) 2022 Reductech Ltd</Copyright>
   </PropertyGroup>

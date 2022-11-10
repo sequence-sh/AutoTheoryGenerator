@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Reductech.Utilities.AutoTheoryGenerator.Utilities
+namespace Sequence.Utilities.AutoTheoryGenerator.Utilities
 {
 
 public static class EnumerableExtensions
