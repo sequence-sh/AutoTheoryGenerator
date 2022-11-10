@@ -4,7 +4,7 @@ using System.IO;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Reductech.Utilities.AutoTheoryGenerator.Tests;
+namespace Sequence.Utilities.AutoTheoryGenerator.Tests;
 
 [AutoTheory.UseTestOutputHelper]
 public partial class MessageWriterTests

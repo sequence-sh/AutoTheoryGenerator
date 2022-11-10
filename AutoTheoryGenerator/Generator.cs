@@ -5,10 +5,10 @@ using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
-using Reductech.Utilities.AutoTheoryGenerator.Utilities;
-using static Reductech.Utilities.AutoTheoryGenerator.Constants;
+using Sequence.Utilities.AutoTheoryGenerator.Utilities;
+using static Sequence.Utilities.AutoTheoryGenerator.Constants;
 
-namespace Reductech.Utilities.AutoTheoryGenerator
+namespace Sequence.Utilities.AutoTheoryGenerator
 {
 
 [Generator]

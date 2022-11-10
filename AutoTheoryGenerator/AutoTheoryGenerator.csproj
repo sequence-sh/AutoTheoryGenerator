@@ -2,26 +2,26 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>Reductech.Utilities.AutoTheoryGenerator</RootNamespace>
-    <AssemblyName>Reductech.Utilities.AutoTheoryGenerator</AssemblyName>
+    <RootNamespace>Sequence.Utilities.AutoTheoryGenerator</RootNamespace>
+    <AssemblyName>Sequence.Utilities.AutoTheoryGenerator</AssemblyName>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>    <!-- Generates a package at build -->
     <IncludeBuildOutput>false</IncludeBuildOutput>    <!-- Do not include the generator as a lib dependency -->
     <Version>0.12.0$(VersionSuffix)</Version>
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageId>Reductech.Utilities.AutoTheoryGenerator</PackageId>
-    <Title>Reductech Test Theory Generator</Title>
+    <PackageId>Sequence.Utilities.AutoTheoryGenerator</PackageId>
+    <Title>Auto Theory Generator</Title>
     <Description>A library to automatically generate xUnit theory methods from lists of test cases.</Description>
 
-    <PackageProjectUrl>https://gitlab.com/reductech/utilities/autotheorygenerator</PackageProjectUrl>
-    <RepositoryUrl>https://gitlab.com/reductech/utilities/autotheorygenerator.git</RepositoryUrl>
-    <PackageReleaseNotes>https://gitlab.com/reductech/utilities/autotheorygenerator/-/blob/main/CHANGELOG.md</PackageReleaseNotes>
+    <PackageProjectUrl>https://gitlab.com/sequence/utilities/autotheorygenerator</PackageProjectUrl>
+    <RepositoryUrl>https://gitlab.com/sequence/utilities/autotheorygenerator.git</RepositoryUrl>
+    <PackageReleaseNotes>https://gitlab.com/sequence/utilities/autotheorygenerator/-/blob/main/CHANGELOG.md</PackageReleaseNotes>
     <PackageTags>testing;dotnet;csharp;sourcegenerator;xunit;theory</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
 
-    <Authors>Reductech</Authors>
+    <Authors>MarkWainwright</Authors>
     <Company>Reductech</Company>
     <Copyright>Copyright (c) 2022 Reductech Ltd</Copyright>
   </PropertyGroup>
