@@ -1,3 +1,11 @@
+# v0.12.0 (2022-11-14)
+
+## Issues Closed in this Release
+
+### Maintenance
+
+- Update namespace and paths after move to Sequence group #42
+
 # v0.11.0 (2022-08-29)
 
 Maintenance release - dependency updates only.
@@ -62,4 +70,5 @@ starting with v0.4.0.
 ### Maintenance
 
 - Update ci script to latest template #1
+
 
